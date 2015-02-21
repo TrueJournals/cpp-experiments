@@ -8,6 +8,7 @@ public:
     virtual ~SimpleParent() = default;
 protected:
     typedef T Parent;
+    typedef SimpleParent<T> ConstructorParent;
 };
 
 class Base {
@@ -22,7 +23,7 @@ public:
 class Child1 : public SimpleParent<Base>
 {
 public:
-    Child1(std::string name) : SimpleParent<Base>(name) { }
+    Child1(std::string name) : ConstructorParent(name) { }
     virtual ~Child1() = default;
 
     virtual void m1() { std::cout << "Child1::m1" << std::endl; Parent::m1(); }
