@@ -5,7 +5,7 @@ run : simple-parent
 	./simple-parent
 
 simple-parent : $(OBJS)
-	g++ -o $@ $<
+	$(CXX) -o $@ $<
 
 %.o : %.cpp
-	g++ -c -g3 -std=c++11 -Wall -o $@ $<
+	$(CXX) -c -g3 -std=c++11 -Wall -o $@ $<
