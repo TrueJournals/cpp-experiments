@@ -13,13 +13,15 @@ public:
     //template<typename O, typename std::enable_if<sizeof(T)>=sizeof(O)>::type* = nullptr>
     //SafeInteger(const SafeInteger<O>& other) : SafeInteger((O)other) { }
 
-    template<typename O,
-        typename std::enable_if<
-            // TODO: Some check with is_signed so min() doesn't freak out?
-            (std::numeric_limits<T>::max() >= std::numeric_limits<O>::max()) &&
-            (std::numeric_limits<T>::min() <= std::numeric_limits<O>::min()) &&
-            (sizeof(T) >= sizeof(O))
-        >::type* = nullptr>
+    template<typename O>
+    static constexpr bool can_convert() {
+        // TODO: Some check with is_signed so min() doesn't freak out?
+        return (std::numeric_limits<T>::max() >= std::numeric_limits<O>::max()) &&
+               (std::numeric_limits<T>::min() <= std::numeric_limits<O>::min()) &&
+               (sizeof(T) >= sizeof(O));
+    }
+
+    template<typename O, typename std::enable_if<can_convert<O>()>::type* = nullptr>
     SafeInteger(const SafeInteger<O>& other) : SafeInteger((O)other) { }
 
     typedef T type;
