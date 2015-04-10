@@ -4,7 +4,7 @@
 template<typename T, typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
 class SafeInteger {
 public:
-    SafeInteger(T value) : value(value) { }
+    explicit SafeInteger(T value) : value(value) { }
     virtual ~SafeInteger() = default;
 
     explicit operator T() const { return value; }
